@@ -1,0 +1,15 @@
+{
+    "name": "v.chetkov/console-logger",
+    "authors": [
+        {
+            "name": "Валерий Четков",
+            "email": "chetkov.valeriy@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Chetkov\\ConsoleLogger\\": "src/"
+        }
+    }
+}
