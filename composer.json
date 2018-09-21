@@ -1,5 +1,7 @@
 {
     "name": "v.chetkov/console-logger",
+    "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Валерий Четков",
