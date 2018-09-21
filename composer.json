@@ -7,9 +7,17 @@
         }
     ],
     "require": {},
+    "required-dev": {
+      "phpunit/phpunit": "^6.4"
+    },
     "autoload": {
         "psr-4": {
             "Chetkov\\ConsoleLogger\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\Chetkov\\ConsoleLogger\\": "tests/"
         }
     }
 }
