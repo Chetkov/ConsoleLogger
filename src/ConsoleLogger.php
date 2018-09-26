@@ -9,16 +9,23 @@ namespace Chetkov\ConsoleLogger;
 class ConsoleLogger implements Logger
 {
     /**
+     * @var LoggerConfig
+     */
+    private $config;
+
+    /**
      * @var ConsoleWriter
      */
     private $consoleWriter;
 
     /**
      * ConsoleLogger constructor.
+     * @param LoggerConfig $config
      * @param ConsoleWriter $consoleWriter
      */
-    public function __construct(ConsoleWriter $consoleWriter)
+    public function __construct(LoggerConfig $config, ConsoleWriter $consoleWriter)
     {
+        $this->config = $config;
         $this->consoleWriter = $consoleWriter;
     }
 
@@ -74,12 +81,22 @@ class ConsoleLogger implements Logger
      */
     private function log(string $level, string $message, array $data = []): void
     {
-        $currentDateTime = new \DateTime();
-        $this->consoleWriter->write(implode(' :: ', [
-            $currentDateTime->format('Y-m-d H:i:s'),
-            $level,
-            $message,
-            json_encode($data)
-        ]));
+        $messageParts = [];
+        if ($this->config->isShowDateTime()) {
+            $currentDateTime = new \DateTime();
+            $messageParts[] = $currentDateTime->format($this->config->getDateTimeFormat());
+        }
+
+        if ($this->config->isShowLevel()) {
+            $messageParts[] = $level;
+        }
+
+        $messageParts[] = $message;
+
+        if ($this->config->isShowData()) {
+            $messageParts[] = json_encode($data);
+        }
+
+        $this->consoleWriter->write(implode($this->config->getFieldDelimiter(), $messageParts));
     }
 }

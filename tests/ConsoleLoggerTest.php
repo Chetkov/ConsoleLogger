@@ -3,8 +3,7 @@
 namespace Tests\Chetkov\ConsoleLogger;
 
 use Chetkov\ConsoleLogger\ConsoleLogger;
-use Chetkov\ConsoleLogger\ConsoleWriter;
-use Chetkov\ConsoleLogger\Logger;
+use Chetkov\ConsoleLogger\ConsoleLoggerFactory;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,11 +13,12 @@ use PHPUnit\Framework\TestCase;
 class ConsoleLoggerTest extends TestCase
 {
     private const MESSAGE = 'Тест';
+    private const EXPECTED_REGEXP = '/[\s\S]*' . self::MESSAGE . '[\s\S]*/';
 
     /**
-     * @var
+     * @var ConsoleLogger
      */
-    private $consoleLogger;
+    protected $consoleLogger;
 
     /**
      * ConsoleLoggerTest constructor.
@@ -30,52 +30,36 @@ class ConsoleLoggerTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->consoleLogger = new ConsoleLogger(new ConsoleWriter());
+        $this->consoleLogger = ConsoleLoggerFactory::create();
     }
 
     public function testDebug(): void
     {
         $this->consoleLogger->debug(self::MESSAGE);
-        $this->expectOutputString($this->generateMessage(Logger::LEVEL_DEBUG));
+        $this->expectOutputRegex(self::EXPECTED_REGEXP);
     }
 
     public function testInfo(): void
     {
         $this->consoleLogger->info(self::MESSAGE);
-        $this->expectOutputString($this->generateMessage(Logger::LEVEL_INFO));
+        $this->expectOutputRegex(self::EXPECTED_REGEXP);
     }
 
     public function testWarning(): void
     {
         $this->consoleLogger->warning(self::MESSAGE);
-        $this->expectOutputString($this->generateMessage(Logger::LEVEL_WARNING));
+        $this->expectOutputRegex(self::EXPECTED_REGEXP);
     }
 
     public function testError(): void
     {
         $this->consoleLogger->error(self::MESSAGE);
-        $this->expectOutputString($this->generateMessage(Logger::LEVEL_ERROR));
+        $this->expectOutputRegex(self::EXPECTED_REGEXP);
     }
 
     public function testCritical(): void
     {
         $this->consoleLogger->critical(self::MESSAGE);
-        $this->expectOutputString($this->generateMessage(Logger::LEVEL_CRITICAL));
-    }
-
-    /**
-     * @param string $level
-     * @return string
-     */
-    private function generateMessage(string $level): string
-    {
-        $data = [];
-        $currentDateTime = new \DateTime();
-        return implode(' :: ', [
-                $currentDateTime->format('Y-m-d H:i:s'),
-                $level,
-                trim(self::MESSAGE),
-                json_encode($data)
-            ]) . PHP_EOL;
+        $this->expectOutputRegex(self::EXPECTED_REGEXP);
     }
 }

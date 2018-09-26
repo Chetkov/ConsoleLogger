@@ -1,7 +1,16 @@
 <?php
+
+use Chetkov\ConsoleLogger\ConsoleLoggerFactory;
+use Chetkov\ConsoleLogger\LoggerConfig;
+use Chetkov\ConsoleLogger\StyledLogger\LoggerStyle;
+use Chetkov\ConsoleLogger\StyledLogger\StyledLoggerDecorator;
+
 require_once 'vendor/autoload.php';
 
-$logger = new \Chetkov\ConsoleLogger\ConsoleLogger();
+$config = (new LoggerConfig())
+    ->setIsShowData(false)
+    ->setIsShowLevel(false);
+$logger = ConsoleLoggerFactory::create($config);
 
 $logger->debug('Тест уровня DEBUG');
 $logger->info('Тест уровня INFO');
@@ -9,7 +18,7 @@ $logger->warning('Тест уровня WARNING');
 $logger->error('Тест уровня ERROR');
 $logger->critical('Тест уровня CRITICAL');
 
-$styledLogger = new \Chetkov\ConsoleLogger\StyledLogger\StyledLoggerDecorator($logger, new \Chetkov\ConsoleLogger\StyledLogger\LoggerStyle());
+$styledLogger = new StyledLoggerDecorator($logger, new LoggerStyle());
 
 $styledLogger->debug('Тест уровня DEBUG');
 $styledLogger->info('Тест уровня INFO');

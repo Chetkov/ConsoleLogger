@@ -2,27 +2,17 @@
 
 namespace Tests\Chetkov\ConsoleLogger;
 
-use Chetkov\ConsoleLogger\ConsoleLogger;
-use Chetkov\ConsoleLogger\ConsoleWriter;
+use Chetkov\ConsoleLogger\ConsoleLoggerFactory;
 use Chetkov\ConsoleLogger\StyledLogger\LevelStyle;
 use Chetkov\ConsoleLogger\StyledLogger\LoggerStyle;
 use Chetkov\ConsoleLogger\StyledLogger\StyledLoggerDecorator;
-use PHPUnit\Framework\TestCase;
 
 /**
  * Class StyledLoggerDecoratorTest
  * @package Tests\Chetkov\ConsoleLogger
  */
-class StyledLoggerDecoratorTest extends TestCase
+class StyledLoggerDecoratorTest extends ConsoleLoggerTest
 {
-    private const MESSAGE = 'Тест';
-    private const EXPECTED_REGEXP = '/[\s\S]*' . self::MESSAGE . '[\s\S]*/';
-
-    /**
-     * @var StyledLoggerDecorator
-     */
-    private $styledLogger;
-
     /**
      * StyledLoggerDecoratorTest constructor.
      * @param null|string $name
@@ -33,9 +23,9 @@ class StyledLoggerDecoratorTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        $logger = new ConsoleLogger(new ConsoleWriter());
+        $logger = ConsoleLoggerFactory::create();
         $loggerStyle = new LoggerStyle();
-        $this->styledLogger = new StyledLoggerDecorator($logger, $loggerStyle);
+        $this->consoleLogger = new StyledLoggerDecorator($logger, $loggerStyle);
     }
 
     public function test__constructor(): void
@@ -47,37 +37,7 @@ class StyledLoggerDecoratorTest extends TestCase
         $loggerStyle->setWarningStyle($levelStyle);
         $loggerStyle->setErrorStyle($levelStyle);
         $loggerStyle->setCriticalStyle($levelStyle);
-        $styledLogger = new StyledLoggerDecorator(new ConsoleLogger(new ConsoleWriter()), $loggerStyle);
+        $styledLogger = new StyledLoggerDecorator(ConsoleLoggerFactory::create(), $loggerStyle);
         $this->assertInstanceOf(StyledLoggerDecorator::class, $styledLogger);
-    }
-
-    public function testDebug(): void
-    {
-        $this->styledLogger->debug(self::MESSAGE);
-        $this->expectOutputRegex(self::EXPECTED_REGEXP);
-    }
-
-    public function testInfo(): void
-    {
-        $this->styledLogger->info(self::MESSAGE);
-        $this->expectOutputRegex(self::EXPECTED_REGEXP);
-    }
-
-    public function testWarning(): void
-    {
-        $this->styledLogger->warning(self::MESSAGE);
-        $this->expectOutputRegex(self::EXPECTED_REGEXP);
-    }
-
-    public function testError(): void
-    {
-        $this->styledLogger->error(self::MESSAGE);
-        $this->expectOutputRegex(self::EXPECTED_REGEXP);
-    }
-
-    public function testCritical(): void
-    {
-        $this->styledLogger->critical(self::MESSAGE);
-        $this->expectOutputRegex(self::EXPECTED_REGEXP);
     }
 }
