@@ -3,6 +3,7 @@
 namespace Tests\Chetkov\ConsoleLogger;
 
 use Chetkov\ConsoleLogger\ConsoleLogger;
+use Chetkov\ConsoleLogger\ConsoleWriter;
 use Chetkov\ConsoleLogger\StyledLogger\LevelStyle;
 use Chetkov\ConsoleLogger\StyledLogger\LoggerStyle;
 use Chetkov\ConsoleLogger\StyledLogger\StyledLoggerDecorator;
@@ -32,7 +33,7 @@ class StyledLoggerDecoratorTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        $logger = new ConsoleLogger();
+        $logger = new ConsoleLogger(new ConsoleWriter());
         $loggerStyle = new LoggerStyle();
         $this->styledLogger = new StyledLoggerDecorator($logger, $loggerStyle);
     }
@@ -46,7 +47,7 @@ class StyledLoggerDecoratorTest extends TestCase
         $loggerStyle->setWarningStyle($levelStyle);
         $loggerStyle->setErrorStyle($levelStyle);
         $loggerStyle->setCriticalStyle($levelStyle);
-        $styledLogger = new StyledLoggerDecorator(new ConsoleLogger(), $loggerStyle);
+        $styledLogger = new StyledLoggerDecorator(new ConsoleLogger(new ConsoleWriter()), $loggerStyle);
         $this->assertInstanceOf(StyledLoggerDecorator::class, $styledLogger);
     }
 

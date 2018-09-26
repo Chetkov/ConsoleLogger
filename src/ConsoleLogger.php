@@ -9,6 +9,20 @@ namespace Chetkov\ConsoleLogger;
 class ConsoleLogger implements Logger
 {
     /**
+     * @var ConsoleWriter
+     */
+    private $consoleWriter;
+
+    /**
+     * ConsoleLogger constructor.
+     * @param ConsoleWriter $consoleWriter
+     */
+    public function __construct(ConsoleWriter $consoleWriter)
+    {
+        $this->consoleWriter = $consoleWriter;
+    }
+
+    /**
      * @param string $message
      * @param array $data
      */
@@ -61,11 +75,11 @@ class ConsoleLogger implements Logger
     private function log(string $level, string $message, array $data = []): void
     {
         $currentDateTime = new \DateTime();
-        echo implode(' :: ', [
+        $this->consoleWriter->write(implode(' :: ', [
             $currentDateTime->format('Y-m-d H:i:s'),
             $level,
-            trim($message),
+            $message,
             json_encode($data)
-        ]) . PHP_EOL;
+        ]));
     }
 }

@@ -3,6 +3,7 @@
 namespace Tests\Chetkov\ConsoleLogger;
 
 use Chetkov\ConsoleLogger\ConsoleLogger;
+use Chetkov\ConsoleLogger\ConsoleWriter;
 use Chetkov\ConsoleLogger\Logger;
 use PHPUnit\Framework\TestCase;
 
@@ -29,7 +30,7 @@ class ConsoleLoggerTest extends TestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->consoleLogger = new ConsoleLogger();
+        $this->consoleLogger = new ConsoleLogger(new ConsoleWriter());
     }
 
     public function testDebug(): void
