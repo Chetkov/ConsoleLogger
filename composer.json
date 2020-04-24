@@ -1,5 +1,6 @@
 {
     "name": "v.chetkov/console-logger",
+    "description": "Консольный логер. Даёт возможность стилизовать сообщения выводисые в консоль.",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -8,7 +9,9 @@
             "email": "chetkov.valeriy@gmail.com"
         }
     ],
-    "require": {},
+    "require": {
+        "psr/log": "^1.1"
+    },
     "required-dev": {
       "phpunit/phpunit": "^6.4"
     },

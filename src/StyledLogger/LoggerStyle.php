@@ -8,91 +8,96 @@ namespace Chetkov\ConsoleLogger\StyledLogger;
  */
 class LoggerStyle
 {
-    /**
-     * @var LevelStyle
-     */
+    /** @var LevelStyle */
+    private $emergencyStyle;
+
+    /** @var LevelStyle */
+    private $alertStyle;
+
+    /** @var LevelStyle */
+    private $criticalStyle;
+
+    /** @var LevelStyle */
+    private $errorStyle;
+
+    /** @var LevelStyle */
+    private $warningStyle;
+
+    /** @var LevelStyle */
+    private $noticeStyle;
+
+    /** @var LevelStyle */
+    private $infoStyle;
+
+    /** @var LevelStyle */
     private $debugStyle;
 
     /**
-     * @var LevelStyle
+     * LoggerStyle constructor.
      */
-    private $infoStyle;
-
-    /**
-     * @var LevelStyle
-     */
-    private $warningStyle;
-
-    /**
-     * @var LevelStyle
-     */
-    private $errorStyle;
-
-    /**
-     * @var LevelStyle
-     */
-    private $criticalStyle;
-
     public function __construct()
     {
-        $this->debugStyle = new LevelStyle();
-        $this->infoStyle = new LevelStyle(LevelStyle::COLOR_BLUE);
-        $this->warningStyle = new LevelStyle(LevelStyle::COLOR_YELLOW);
+        $this->emergencyStyle = new LevelStyle(LevelStyle::COLOR_YELLOW, LevelStyle::BACKGROUND_RED, [LevelStyle::MODE_BOLD]);
+        $this->alertStyle = new LevelStyle(LevelStyle::COLOR_WHITE, LevelStyle::BACKGROUND_YELLOW);
+        $this->criticalStyle = new LevelStyle(LevelStyle::COLOR_WHITE, LevelStyle::BACKGROUND_RED, [LevelStyle::MODE_BOLD]);
         $this->errorStyle = new LevelStyle(LevelStyle::COLOR_RED);
-        $this->criticalStyle = new LevelStyle(LevelStyle::COLOR_WHITE, LevelStyle::BACKGROUND_RED);
+        $this->warningStyle = new LevelStyle(LevelStyle::COLOR_YELLOW);
+        $this->noticeStyle = new LevelStyle(LevelStyle::COLOR_CYAN);
+        $this->infoStyle = new LevelStyle(LevelStyle::COLOR_BLUE);
+        $this->debugStyle = new LevelStyle(LevelStyle::COLOR_WHITE);
     }
 
     /**
      * @return LevelStyle
      */
-    public function getDebugStyle(): LevelStyle
+    public function getEmergencyStyle(): LevelStyle
     {
-        return $this->debugStyle;
+        return $this->emergencyStyle;
     }
 
     /**
-     * @param LevelStyle $debugStyle
+     * @param LevelStyle $emergencyStyle
      * @return LoggerStyle
      */
-    public function setDebugStyle(LevelStyle $debugStyle): LoggerStyle
+    public function setEmergencyStyle(LevelStyle $emergencyStyle): LoggerStyle
     {
-        $this->debugStyle = $debugStyle;
+        $this->emergencyStyle = $emergencyStyle;
         return $this;
     }
 
     /**
      * @return LevelStyle
      */
-    public function getInfoStyle(): LevelStyle
+    public function getAlertStyle(): LevelStyle
     {
-        return $this->infoStyle;
+        return $this->alertStyle;
     }
 
     /**
-     * @param LevelStyle $infoStyle
+     * @param LevelStyle $alertStyle
      * @return LoggerStyle
      */
-    public function setInfoStyle(LevelStyle $infoStyle): LoggerStyle
+    public function setAlertStyle(LevelStyle $alertStyle): LoggerStyle
     {
-        $this->infoStyle = $infoStyle;
+        $this->alertStyle = $alertStyle;
         return $this;
     }
 
     /**
      * @return LevelStyle
      */
-    public function getWarningStyle(): LevelStyle
+    public function getCriticalStyle(): LevelStyle
     {
-        return $this->warningStyle;
+        return $this->criticalStyle;
     }
 
     /**
-     * @param LevelStyle $warningStyle
+     * @param LevelStyle $criticalStyle
      * @return LoggerStyle
      */
-    public function setWarningStyle(LevelStyle $warningStyle): LoggerStyle
+    public function setCriticalStyle(LevelStyle $criticalStyle): LoggerStyle
     {
-        $this->warningStyle = $warningStyle;
+        $this->criticalStyle = $criticalStyle;
         return $this;
     }
 
@@ -117,18 +122,72 @@ class LoggerStyle
     /**
      * @return LevelStyle
      */
-    public function getCriticalStyle(): LevelStyle
+    public function getWarningStyle(): LevelStyle
     {
-        return $this->criticalStyle;
+        return $this->warningStyle;
     }
 
     /**
-     * @param LevelStyle $criticalStyle
+     * @param LevelStyle $warningStyle
      * @return LoggerStyle
      */
-    public function setCriticalStyle(LevelStyle $criticalStyle): LoggerStyle
+    public function setWarningStyle(LevelStyle $warningStyle): LoggerStyle
     {
-        $this->criticalStyle = $criticalStyle;
+        $this->warningStyle = $warningStyle;
+        return $this;
+    }
+
+    /**
+     * @return LevelStyle
+     */
+    public function getNoticeStyle(): LevelStyle
+    {
+        return $this->noticeStyle;
+    }
+
+    /**
+     * @param LevelStyle $noticeStyle
+     * @return LoggerStyle
+     */
+    public function setNoticeStyle(LevelStyle $noticeStyle): LoggerStyle
+    {
+        $this->noticeStyle = $noticeStyle;
+        return $this;
+    }
+
+    /**
+     * @return LevelStyle
+     */
+    public function getInfoStyle(): LevelStyle
+    {
+        return $this->infoStyle;
+    }
+
+    /**
+     * @param LevelStyle $infoStyle
+     * @return LoggerStyle
+     */
+    public function setInfoStyle(LevelStyle $infoStyle): LoggerStyle
+    {
+        $this->infoStyle = $infoStyle;
+        return $this;
+    }
+
+    /**
+     * @return LevelStyle
+     */
+    public function getDebugStyle(): LevelStyle
+    {
+        return $this->debugStyle;
+    }
+
+    /**
+     * @param LevelStyle $debugStyle
+     * @return LoggerStyle
+     */
+    public function setDebugStyle(LevelStyle $debugStyle): LoggerStyle
+    {
+        $this->debugStyle = $debugStyle;
         return $this;
     }
 }

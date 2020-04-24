@@ -8,14 +8,10 @@ namespace Chetkov\ConsoleLogger;
  */
 class ConsoleLogger implements Logger
 {
-    /**
-     * @var LoggerConfig
-     */
+    /**@var LoggerConfig */
     private $config;
 
-    /**
-     * @var ConsoleWriter
-     */
+    /** @var ConsoleWriter */
     private $consoleWriter;
 
     /**
@@ -30,61 +26,77 @@ class ConsoleLogger implements Logger
     }
 
     /**
-     * @param string $message
-     * @param array $data
+     * @inheritDoc
      */
-    public function debug(string $message, array $data = []): void
+    public function emergency($message, array $context = []): void
     {
-        $this->log(self::LEVEL_DEBUG, $message, $data);
+        $this->log(self::LEVEL_EMERGENCY, $message, $context);
     }
 
     /**
-     * @param string $message
-     * @param array $data
+     * @inheritDoc
      */
-    public function info(string $message, array $data = []): void
+    public function alert($message, array $context = []): void
     {
-        $this->log(self::LEVEL_INFO, $message, $data);
+        $this->log(self::LEVEL_ALERT, $message, $context);
     }
 
     /**
-     * @param string $message
-     * @param array $data
+     * @inheritDoc
      */
-    public function warning(string $message, array $data = []): void
+    public function critical($message, array $context = []): void
     {
-        $this->log(self::LEVEL_WARNING, $message, $data);
+        $this->log(self::LEVEL_CRITICAL, $message, $context);
     }
 
     /**
-     * @param string $message
-     * @param array $data
+     * @inheritDoc
      */
-    public function error(string $message, array $data = []): void
+    public function error($message, array $context = []): void
     {
-        $this->log(self::LEVEL_ERROR, $message, $data);
+        $this->log(self::LEVEL_ERROR, $message, $context);
     }
 
     /**
-     * @param string $message
-     * @param array $data
+     * @inheritDoc
      */
-    public function critical(string $message, array $data = []): void
+    public function warning($message, array $context = []): void
     {
-        $this->log(self::LEVEL_CRITICAL, $message, $data);
+        $this->log(self::LEVEL_WARNING, $message, $context);
     }
 
     /**
-     * @param string $level
-     * @param string $message
-     * @param array $data
+     * @inheritDoc
      */
-    private function log(string $level, string $message, array $data = []): void
+    public function notice($message, array $context = []): void
+    {
+        $this->log(self::LEVEL_NOTICE, $message, $context);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function info($message, array $context = []): void
+    {
+        $this->log(self::LEVEL_INFO, $message, $context);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function debug($message, array $context = []): void
+    {
+        $this->log(self::LEVEL_DEBUG, $message, $context);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function log($level, $message, array $context = []): void
     {
         $messageParts = [];
         if ($this->config->isShowDateTime()) {
-            $currentDateTime = new \DateTime();
-            $messageParts[] = $currentDateTime->format($this->config->getDateTimeFormat());
+            $messageParts[] = date($this->config->getDateTimeFormat());
         }
 
         if ($this->config->isShowLevel()) {
@@ -94,7 +106,7 @@ class ConsoleLogger implements Logger
         $messageParts[] = $message;
 
         if ($this->config->isShowData()) {
-            $messageParts[] = json_encode($data);
+            $messageParts[] = json_encode($context);
         }
 
         $this->consoleWriter->write(implode($this->config->getFieldDelimiter(), $messageParts));
